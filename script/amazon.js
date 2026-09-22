@@ -46,12 +46,12 @@ products.forEach((product) =>
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary" data-button-id = ${product.id}>
             Add to Cart
           </button>
         </div>
@@ -59,3 +59,32 @@ products.forEach((product) =>
 });
 
 document.querySelector('.product-grid-js').innerHTML = generatehtml;
+
+const addMessageId = {};
+
+document.querySelectorAll('.add-to-cart-button').forEach((button) => 
+{
+  button.addEventListener('click', () =>
+  {
+    const buttonId = button.dataset.buttonId;
+
+    const addMessage = document.querySelector(`.js-added-to-cart-${buttonId}`);
+
+    addMessage.classList.add('visiual-message');
+
+    setTimeout(()=>
+    {
+      const previousId = addMessage[buttonId];
+
+      if(previousId)
+      {
+        clearTimeout(previousId);
+      }
+      const intervalId = setTimeout(()=>
+      {
+        addMessage.classList.remove('visiual-message')
+      },2000);
+      addMessage[buttonId] = intervalId;
+    });
+  })
+})
