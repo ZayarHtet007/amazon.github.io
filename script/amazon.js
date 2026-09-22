@@ -1,5 +1,6 @@
 import {products} from "../data/products.js";
 import {fixedPrice} from "../fixed/fixedPrice.js";
+import { addToCart,calculateCartQuantity } from "../data/cart.js";
 
 let generatehtml = '';
 
@@ -67,6 +68,10 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) =>
   button.addEventListener('click', () =>
   {
     const buttonId = button.dataset.buttonId;
+
+    addToCart(buttonId);
+
+    document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
 
     const addMessage = document.querySelector(`.js-added-to-cart-${buttonId}`);
 
