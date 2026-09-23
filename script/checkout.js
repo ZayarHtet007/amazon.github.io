@@ -1,16 +1,19 @@
-import { cart, getProduct } from "../data/cart.js";
+import { cart, getProduct, editQuantity } from "../data/cart.js";
 import { fixedPrice } from "../fixed/fixedPrice.js";
 
-let checkoutHTML = '';
+renderOrderSummary();
 
-cart.forEach((cartItems) => {
-    const productId = cartItems.productId;
+function renderOrderSummary() {
+    let checkoutHTML = '';
 
-    const matchingProduct = getProduct(productId);
+    cart.forEach((cartItems) => {
+        const productId = cartItems.productId;
 
-    console.log(matchingProduct.id);
+        const matchingProduct = getProduct(productId);
 
-    checkoutHTML += `<div class="cart-item-container">
+        // console.log(matchingProduct.id);
+
+        checkoutHTML += `<div class="cart-item-container js-cart-${matchingProduct.id}">
             <div class="delivery-date">
               Delivery date: Tuesday, June 21
             </div>
@@ -28,11 +31,13 @@ cart.forEach((cartItems) => {
                 </div>
                 <div class="product-quantity">
                   <span>
-                    Quantity: <span class="quantity-label">2</span>
+                    Quantity: <span class="quantity-label">${cartItems.quantity}</span>
                   </span>
-                  <span class="update-quantity-link link-primary">
+                  <span class="update-quantity-link link-primary js-update-quantity" data-update-id = ${matchingProduct.id}>
                     Update
                   </span>
+                  <input class = "quantity-input js-quantity-input-${matchingProduct.id}">
+                  <span class="save-link link-primary" data-save-id = ${matchingProduct.id}>save</span>
                   <span class="delete-quantity-link link-primary">
                     Delete
                   </span>
@@ -84,9 +89,41 @@ cart.forEach((cartItems) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> `;
+    })
 
-                    `;
-})
+    document.querySelector('.js-order-summary').innerHTML = checkoutHTML;
 
-document.querySelector('.js-order-summary').innerHTML = checkoutHTML;
+    document.querySelectorAll('.js-update-quantity').forEach((updateButton) => {
+        updateButton.addEventListener('click', () => {
+            const updateId = updateButton.dataset.updateId;
+
+            const inputId = document.querySelector(`.js-cart-${updateId}`);
+
+            inputId.classList.add('edit-quantity');
+        })
+    })
+
+    document.querySelectorAll('.save-link').forEach((saveLink) => {
+        saveLink.addEventListener('click', () => {
+            const saveId = saveLink.dataset.saveId;
+
+            const save = document.querySelector(`.js-cart-${saveId}`);
+
+            const input = document.querySelector(`.js-quantity-input-${saveId}`).value;
+
+            const quantity = Number(input);
+
+            editQuantity(saveId, quantity);
+
+            console.log(quantity);
+
+            save.classList.remove('edit-quantity');
+
+            renderOrderSummary();
+        })
+    })
+}
+
+
+

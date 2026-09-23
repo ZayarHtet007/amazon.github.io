@@ -62,6 +62,22 @@ export function addToCart(productId)
     saveToStorage();
 }
 
+export function editQuantity(productId, quantity)
+{
+    let matchingItem;
+    cart.forEach((cartItems) => 
+    {
+        if(cartItems.productId == productId)
+        {
+            matchingItem = cartItems;
+        }
+    })
+
+    matchingItem.quantity = quantity;
+
+    saveToStorage();
+}
+
 export function calculateCartQuantity()
 {
     let cartQuantity = 0;
