@@ -1,4 +1,4 @@
-let cart = [
+let cart = JSON.parse(localStorage.getItem('cart')) || [
     {
         productId : "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
         quantity : 0,
@@ -29,7 +29,7 @@ export function addToCart(productId)
 
     if(matchingItem)
     {
-        matchingItem.quantity = quantity;
+        matchingItem.quantity += quantity;
     }
     else 
     {
@@ -42,7 +42,7 @@ export function addToCart(productId)
         )
     }
 
-    console.log(quantity);
+    saveToStorage();
 }
 
 export function calculateCartQuantity()
@@ -52,6 +52,8 @@ export function calculateCartQuantity()
     {
         cartQuantity += cartItems.quantity;
     })
+
+    saveToStorage();
 
     return cartQuantity;
 }

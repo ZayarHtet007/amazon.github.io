@@ -61,6 +61,8 @@ products.forEach((product) =>
 
 document.querySelector('.product-grid-js').innerHTML = generatehtml;
 
+document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
+
 const addMessageId = {};
 
 document.querySelectorAll('.add-to-cart-button').forEach((button) => 
