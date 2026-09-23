@@ -1,4 +1,6 @@
-let cart = JSON.parse(localStorage.getItem('cart')) || [
+import { products } from "./products.js";
+
+export let cart = JSON.parse(localStorage.getItem('cart')) || [
     {
         productId : "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
         quantity : 0,
@@ -10,6 +12,21 @@ export function saveToStorage()
 {
     localStorage.setItem('cart', JSON.stringify(cart));
 };
+
+export function getProduct(productId) 
+{
+    let matchingItems;
+
+    products.forEach((productItems) => 
+    {
+        if(productItems.id == productId)
+        {
+         matchingItems = productItems;
+        }
+    })
+
+    return matchingItems;
+}
 
 export function addToCart(productId)
 {
@@ -52,8 +69,6 @@ export function calculateCartQuantity()
     {
         cartQuantity += cartItems.quantity;
     })
-
-    saveToStorage();
 
     return cartQuantity;
 }
