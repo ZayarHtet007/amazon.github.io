@@ -125,6 +125,15 @@ function renderOrderSummary() {
             renderOrderSummary();
         })
     })
+
+    document.querySelectorAll('.quantity-input').forEach((input) => {
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                input.closest('.cart-item-container').querySelector('.save-link').click();
+            }
+        });
+    })
+
 }
 
 
