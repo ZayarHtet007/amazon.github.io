@@ -1,4 +1,4 @@
-import { cart, getProduct, editQuantity } from "../data/cart.js";
+import { cart, getProduct, editQuantity, calculateCartQuantity } from "../data/cart.js";
 import { fixedPrice } from "../fixed/fixedPrice.js";
 
 renderOrderSummary();
@@ -93,6 +93,8 @@ function renderOrderSummary() {
     })
 
     document.querySelector('.js-order-summary').innerHTML = checkoutHTML;
+
+    document.querySelector('.js-checkout-header').innerHTML = calculateCartQuantity();
 
     document.querySelectorAll('.js-update-quantity').forEach((updateButton) => {
         updateButton.addEventListener('click', () => {
