@@ -87,6 +87,7 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) =>
       {
         clearTimeout(previousId);
       }
+      
       const intervalId = setTimeout(()=>
       {
         addMessage.classList.remove('visiual-message')

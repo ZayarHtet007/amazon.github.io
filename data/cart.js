@@ -103,5 +103,5 @@ export function deleteItem(deleteId)
 
     cart = newCart;
 
-    saveToStorage()
+    saveToStorage();
 }
