@@ -88,3 +88,20 @@ export function calculateCartQuantity()
 
     return cartQuantity;
 }
+
+export function deleteItem(deleteId)
+{
+    const newCart = [];
+
+    cart.forEach((cartItems) => 
+    {
+        if(cartItems.productId != deleteId)
+        {
+            newCart.push(cartItems);
+        }
+    })
+
+    cart = newCart;
+
+    saveToStorage()
+}

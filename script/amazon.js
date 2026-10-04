@@ -81,7 +81,7 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) =>
 
     setTimeout(()=>
     {
-      const previousId = addMessage[buttonId];
+      const previousId = addMessageId[buttonId];
 
       if(previousId)
       {
@@ -91,7 +91,7 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) =>
       {
         addMessage.classList.remove('visiual-message')
       },2000);
-      addMessage[buttonId] = intervalId;
+      addMessageId[buttonId] = intervalId;
     });
   })
 })

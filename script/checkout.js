@@ -1,4 +1,4 @@
-import { cart, getProduct, editQuantity, calculateCartQuantity } from "../data/cart.js";
+import { cart, getProduct, editQuantity, calculateCartQuantity, deleteItem } from "../data/cart.js";
 import { fixedPrice } from "../fixed/fixedPrice.js";
 
 renderOrderSummary();
@@ -38,7 +38,7 @@ function renderOrderSummary() {
                   </span>
                   <input class = "quantity-input js-quantity-input-${matchingProduct.id}">
                   <span class="save-link link-primary" data-save-id = ${matchingProduct.id}>save</span>
-                  <span class="delete-quantity-link link-primary">
+                  <span class="delete-quantity-link link-primary js-delete-button" data-delete-id = ${matchingProduct.id}>
                     Delete
                   </span>
                 </div>
@@ -126,12 +126,27 @@ function renderOrderSummary() {
         })
     })
 
-    document.querySelectorAll('.quantity-input').forEach((input) => {
-        input.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                input.closest('.cart-item-container').querySelector('.save-link').click();
-            }
-        });
+    document.querySelectorAll('.js-delete-button').forEach((deleteButton) =>
+    {
+      deleteButton.addEventListener('click', () => 
+      {
+        const deleteId = deleteButton.dataset.deleteId;
+
+        deleteItem(deleteId);
+
+        renderOrderSummary();
+      })
+    })
+
+    document.querySelectorAll('.quantity-input').forEach((input) => 
+    {
+      input.addEventListener('keydown', (event) => 
+      {
+        if(event.key === 'Enter')
+        {
+          input.closest('.cart-item-container').querySelector('.save-link').click();
+        }
+      });
     })
 
 }
