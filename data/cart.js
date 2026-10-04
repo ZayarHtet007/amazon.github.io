@@ -73,7 +73,14 @@ export function editQuantity(productId, quantity)
         }
     })
 
+   if(quantity>0 && quantity<=10000)
+   {
     matchingItem.quantity = quantity;
+   }
+   else
+   {
+    alert("Invalid quantity!!");
+   }
 
     saveToStorage();
 }
