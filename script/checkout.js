@@ -1,4 +1,4 @@
-import { cart, getProduct, editQuantity, calculateCartQuantity, deleteItem } from "../data/cart.js";
+import { cart, getProduct, editQuantity, calculateCartQuantity, deleteItem, updateDeliveryOption} from "../data/cart.js";
 import {deliveryOption} from "../data/deliveryOption.js"
 import { fixedPrice } from "../fixed/fixedPrice.js";
 
@@ -46,7 +46,7 @@ function renderOrderSummary() {
               </div>
 
               <div class="delivery-options">
-              <div class="delivery-options-title">
+                <div class="delivery-options-title">
                   Choose a delivery option:
                 </div>
                ${deliveryHTML(matchingProduct,cartItems)}
@@ -62,7 +62,7 @@ function renderOrderSummary() {
     function deliveryHTML(matchingItem,cartItems) 
     {
       let html = '';
-
+ 
       deliveryOption.forEach((option) => 
       {
 
@@ -73,11 +73,11 @@ function renderOrderSummary() {
         console.log(isChecked);
 
         html += `
-                <div class="delivery-option" data-delivery-id = ${option.id}
+                <div class="delivery-option js-delivery-option" data-delivery-id = ${option.id}
                 data-product-id = ${matchingItem.id}>
                   <input type="radio" 
                   ${isChecked ? 'checked' : ''}
-                    class="delivery-option-input"
+                    class="delivery-option-input" 
                     name="delivery-option-${matchingItem.id}">
                   <div>
                     <div class="delivery-option-date">
@@ -145,6 +145,16 @@ function renderOrderSummary() {
           input.closest('.cart-item-container').querySelector('.save-link').click();
         }
       });
+    })
+
+    document.querySelectorAll('.js-delivery-option').forEach((deliveryElement) => 
+    {
+      deliveryElement.addEventListener('click', ()=>
+      {
+        const {productId, deliveryId} = deliveryElement.dataset;
+        updateDeliveryOption(productId,deliveryId);
+        renderOrderSummary();
+      }) 
     })
 }
 

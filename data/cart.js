@@ -105,3 +105,19 @@ export function deleteItem(deleteId)
 
     saveToStorage();
 }
+
+export function updateDeliveryOption(productId, deliveryId)
+{
+    let matchingItem;
+
+    cart.forEach((items) => 
+    {
+        if(productId == items.productId)
+        {
+            matchingItem = items;
+        }
+    })
+
+    matchingItem.deliveryId = deliveryId;
+    saveToStorage();
+}
