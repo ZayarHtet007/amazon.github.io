@@ -1,8 +1,10 @@
-import { cart, getProduct, editQuantity, calculateCartQuantity, deleteItem, updateDeliveryOption} from "../data/cart.js";
-import {deliveryOption} from "../data/deliveryOption.js"
-import { fixedPrice } from "../fixed/fixedPrice.js";
+import { cart, getProduct, editQuantity, calculateCartQuantity, deleteItem, updateDeliveryOption} from "../../data/cart.js";
+import {deliveryOption} from "../../data/deliveryOption.js"
+import { fixedPrice } from "../../fixed/fixedPrice.js";
+import {renderPaymentSummary} from "./renderPaymentSummary.js"
 
 renderOrderSummary();
+renderPaymentSummary();
 
 function renderOrderSummary() {
     let checkoutHTML = '';
