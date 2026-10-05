@@ -1,5 +1,6 @@
 import {cart, calculateCartQuantity,getProduct} from "../../data/cart.js";
 import {getDeliveryItems} from "../../data/deliveryOption.js";
+import { addOrder } from "../../data/order.js";
 import {fixedPrice} from "../../fixed/fixedPrice.js";
 
 export function renderPaymentSummary()
@@ -54,10 +55,20 @@ export function renderPaymentSummary()
             <div class="payment-summary-money">$${fixedPrice(orderTotal)}</div>
           </div>
 
-          <button class="place-order-button button-primary">
+          <button class="place-order-button button-primary js-place-order">
             Place your order
           </button>
             `
 
     document.querySelector('.js-payment-summary').innerHTML = html;
+
+    document.querySelector('.js-place-order').addEventListener('click', () => 
+    {
+      cart.forEach((cartItems) => 
+      {
+        addOrder(cartItems);
+      })
+
+      window.location = "orders.html";
+    })
 }

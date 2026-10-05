@@ -15,8 +15,6 @@ function renderOrderSummary() {
 
         const matchingProduct = getProduct(productId);
 
-        // console.log(matchingProduct.id);
-
         checkoutHTML += `<div class="cart-item-container js-cart-${matchingProduct.id}">
             <div class="delivery-date">
               Delivery date: Tuesday, June 21
