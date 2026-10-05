@@ -90,7 +90,7 @@ function renderOrderSummary() {
                     </div>
                   </div>
                 </div>
-              `
+              ` 
       });
 
       return html;
@@ -156,6 +156,7 @@ function renderOrderSummary() {
         const {productId, deliveryId} = deliveryElement.dataset;
         updateDeliveryOption(productId,deliveryId);
         renderOrderSummary();
+        renderPaymentSummary();
       }) 
     })
 }

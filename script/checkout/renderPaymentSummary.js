@@ -1,8 +1,19 @@
-import {cart} from "../../data/cart.js";
+import {cart, calculateCartQuantity} from "../../data/cart.js";
+import {getDeliveryItems} from "../../data/deliveryOption.js";
+import {fixedPrice} from "../../fixed/fixedPrice.js"
 
 export function renderPaymentSummary()
 {
     let html = '';
+    let deliveryPrice = 0;
+
+    cart.forEach((cartItems) => 
+    {
+      const product = getDeliveryItems(cartItems.deliveryId);
+
+      deliveryPrice += product.priceCents;
+    });
+
 
     html = `
             <div class="payment-summary-title">
@@ -10,13 +21,13 @@ export function renderPaymentSummary()
           </div>
 
           <div class="payment-summary-row">
-            <div>Items (3):</div>
+            <div>Items (${calculateCartQuantity()}):</div>
             <div class="payment-summary-money">$42.75</div>
           </div>
 
           <div class="payment-summary-row">
             <div>Shipping &amp; handling:</div>
-            <div class="payment-summary-money">$4.99</div>
+            <div class="payment-summary-money">$${fixedPrice(deliveryPrice)}</div>
           </div>
 
           <div class="payment-summary-row subtotal-row">
