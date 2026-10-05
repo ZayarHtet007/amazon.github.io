@@ -123,6 +123,7 @@ function renderOrderSummary() {
             save.classList.remove('edit-quantity');
 
             renderOrderSummary();
+            renderPaymentSummary();
         })
     })
 
@@ -135,6 +136,7 @@ function renderOrderSummary() {
         deleteItem(deleteId);
 
         renderOrderSummary();
+        renderPaymentSummary();
       })
     })
 
@@ -155,6 +157,7 @@ function renderOrderSummary() {
       {
         const {productId, deliveryId} = deliveryElement.dataset;
         updateDeliveryOption(productId,deliveryId);
+        
         renderOrderSummary();
         renderPaymentSummary();
       }) 

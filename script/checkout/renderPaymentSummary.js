@@ -15,7 +15,7 @@ export function renderPaymentSummary()
 
       matchingProduct = getProduct(cartItems.productId);
 
-      price += matchingProduct.priceCents;
+      price += (matchingProduct.priceCents * cartItems.quantity);
 
       deliveryPrice += product.priceCents;
     });
