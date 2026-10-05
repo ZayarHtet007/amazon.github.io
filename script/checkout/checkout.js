@@ -2,6 +2,7 @@ import { cart, getProduct, editQuantity, calculateCartQuantity, deleteItem, upda
 import {deliveryOption} from "../../data/deliveryOption.js"
 import { fixedPrice } from "../../fixed/fixedPrice.js";
 import {renderPaymentSummary} from "./renderPaymentSummary.js"
+import datejs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 
 renderOrderSummary();
 renderPaymentSummary();
@@ -68,6 +69,12 @@ function renderOrderSummary() {
       deliveryOption.forEach((option) => 
       {
 
+        const today = datejs();
+
+        const deliveryDate = today.add(option.day, 'days');
+
+        const date = deliveryDate.format('dddd, MMMM D');
+
         const isChecked = option.id === cartItems.deliveryId; 
 
         const price = option.priceCents === 0 ? 'Free' : `$${fixedPrice(option.priceCents)} - `;  
@@ -83,7 +90,7 @@ function renderOrderSummary() {
                     name="delivery-option-${matchingItem.id}">
                   <div>
                     <div class="delivery-option-date">
-                      Tuesday, June 21
+                      ${date}
                     </div>
                     <div class="delivery-option-price">
                       ${price} Shipping
@@ -157,7 +164,7 @@ function renderOrderSummary() {
       {
         const {productId, deliveryId} = deliveryElement.dataset;
         updateDeliveryOption(productId,deliveryId);
-        
+
         renderOrderSummary();
         renderPaymentSummary();
       }) 

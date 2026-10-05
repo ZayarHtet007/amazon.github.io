@@ -1,6 +1,6 @@
 import {cart, calculateCartQuantity,getProduct} from "../../data/cart.js";
 import {getDeliveryItems} from "../../data/deliveryOption.js";
-import {fixedPrice} from "../../fixed/fixedPrice.js"
+import {fixedPrice} from "../../fixed/fixedPrice.js";
 
 export function renderPaymentSummary()
 {
