@@ -1,4 +1,4 @@
-export const orders = JSON.parse(localStorage.getItem('orders')) || '[]';
+export const orders = JSON.parse(localStorage.getItem('orders')) || [];
 
 export function addOrder(order)
 {
@@ -12,7 +12,14 @@ function saveToStorage()
     localStorage.setItem('orders' , JSON.stringify(orders));
 }
 
-orders.forEach((order) => 
+export function calculateOrderQuantity()
 {
-    console.log(order);
-})
+    let total = 0;
+
+    orders.forEach((order) => 
+    {
+        total += order.quantity;
+    })
+
+    return total;
+}
