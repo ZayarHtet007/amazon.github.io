@@ -1,4 +1,4 @@
-import {cart, calculateCartQuantity} from "../../data/cart.js";
+import {cart, calculateCartQuantity,getProduct} from "../../data/cart.js";
 import {getDeliveryItems} from "../../data/deliveryOption.js";
 import {fixedPrice} from "../../fixed/fixedPrice.js"
 
@@ -6,14 +6,23 @@ export function renderPaymentSummary()
 {
     let html = '';
     let deliveryPrice = 0;
+    let matchingProduct;
+    let price = 0;
 
     cart.forEach((cartItems) => 
     {
       const product = getDeliveryItems(cartItems.deliveryId);
 
+      matchingProduct = getProduct(cartItems.productId);
+
+      price += matchingProduct.priceCents;
+
       deliveryPrice += product.priceCents;
     });
 
+    const totalPriceBeforeTax = price + deliveryPrice;
+    const estimatedTax = totalPriceBeforeTax * 0.1;
+    const orderTotal = estimatedTax + totalPriceBeforeTax;
 
     html = `
             <div class="payment-summary-title">
@@ -22,7 +31,7 @@ export function renderPaymentSummary()
 
           <div class="payment-summary-row">
             <div>Items (${calculateCartQuantity()}):</div>
-            <div class="payment-summary-money">$42.75</div>
+            <div class="payment-summary-money">$${fixedPrice(price)}</div>
           </div>
 
           <div class="payment-summary-row">
@@ -32,17 +41,17 @@ export function renderPaymentSummary()
 
           <div class="payment-summary-row subtotal-row">
             <div>Total before tax:</div>
-            <div class="payment-summary-money">$47.74</div>
+            <div class="payment-summary-money">$${fixedPrice(totalPriceBeforeTax)}</div>
           </div>
 
           <div class="payment-summary-row">
             <div>Estimated tax (10%):</div>
-            <div class="payment-summary-money">$4.77</div>
+            <div class="payment-summary-money">$${fixedPrice(estimatedTax)}</div>
           </div>
 
           <div class="payment-summary-row total-row">
             <div>Order total:</div>
-            <div class="payment-summary-money">$52.51</div>
+            <div class="payment-summary-money">$${fixedPrice(orderTotal)}</div>
           </div>
 
           <button class="place-order-button button-primary">
