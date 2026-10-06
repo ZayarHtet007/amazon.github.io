@@ -4,11 +4,11 @@ import datejs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { getDeliveryItems } from "../data/deliveryOption.js";
 import { fixedPrice } from "../fixed/fixedPrice.js";
 
-renderTracking();
+renderOrder();
 
 document.querySelector('.js-quantity').innerHTML = calculateOrderQuantity();
 
-export function renderTracking()
+export function renderOrder()
 {
     let html = '';
 
@@ -64,14 +64,14 @@ export function renderTracking()
               <div class="product-quantity">
                 Quantity: ${order.quantity}
               </div>
-              <button class="buy-again-button button-primary">
+              <button class="buy-again-button button-primary" data-order-id = ${product.id}>
                 <img class="buy-again-icon" src="images/icons/buy-again.png">
                 <span class="buy-again-message">Buy it again</span>
               </button>
             </div>
 
             <div class="product-actions">
-              <a href="tracking.html">
+              <a href="tracking.html"
                 <button class="track-package-button button-secondary">
                   Track package
                 </button>
@@ -82,6 +82,15 @@ export function renderTracking()
                 `
     })
 
-
     document.querySelector('.js-orders-grid').innerHTML = html;
+
+    document.querySelectorAll('.js-track-button').forEach((trackButton) => 
+    {
+      trackButton.addEventListener('click', () =>
+      {
+        const orderId = trackButton.dataset.orderId;
+        renderOrder();
+        console.log(orderId);
+      })
+    })
 }
