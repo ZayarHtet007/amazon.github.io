@@ -1,3 +1,5 @@
+import {cart} from "./cart.js";
+
 export const orders = JSON.parse(localStorage.getItem('orders')) || [];
 
 export function addOrder(order)
@@ -22,4 +24,19 @@ export function calculateOrderQuantity()
     })
 
     return total;
+}
+
+export function getOrder(orderId) 
+{
+    let matchingOrder;
+
+    cart.forEach((cartItems) => 
+    {
+        if(cartItems.productId == orderId)
+        {
+            matchingOrder= cartItems;
+        }
+    })
+
+    return matchingOrder;
 }

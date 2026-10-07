@@ -71,7 +71,7 @@ export function renderOrder()
             </div>
 
             <div class="product-actions">
-              <a href="tracking.html"
+              <a href="tracking.html?productId=${product.id}"
                 <button class="track-package-button button-secondary">
                   Track package
                 </button>

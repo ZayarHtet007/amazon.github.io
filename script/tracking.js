@@ -1,4 +1,7 @@
 import { getProduct } from "../data/cart.js";
+import {getOrder} from "../data/order.js";
+import { getDeliveryItems } from "../data/deliveryOption.js";
+import datejs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 
 renderTracking();
 
@@ -6,7 +9,21 @@ function renderTracking()
 {
     let trackingHTML = '';
 
-    const product = getProduct();
+    const url = new URL(window.location.href);
+
+    const productId = url.searchParams.get('productId');
+
+    const product = getProduct(productId);
+
+    const order = getOrder(productId);
+
+    const deliveryItem = getDeliveryItems(order.deliveryId);
+
+    const today = datejs();
+
+    const date = today.add(deliveryItem.day, 'days'); 
+
+    const deliveryDate = date.format('dddd MMMM, D');
 
     trackingHTML = ` 
                     <div class="order-tracking">
@@ -15,18 +32,18 @@ function renderTracking()
         </a>
 
         <div class="delivery-date">
-          Arriving on Monday, June 13
+          Arriving on ${deliveryDate}
         </div>
 
         <div class="product-info">
-          Black and Gray Athletic Cotton Socks - 6 Pairs
+          ${product.name}
         </div>
 
         <div class="product-info">
-          Quantity: 1
+          Quantity: ${order.quantity}
         </div>
 
-        <img class="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg">
+        <img class="product-image" src="${product.image}">
 
         <div class="progress-labels-container">
           <div class="progress-label">
