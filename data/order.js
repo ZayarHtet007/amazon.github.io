@@ -30,7 +30,7 @@ export function getOrder(orderId)
 {
     let matchingOrder;
 
-    cart.forEach((cartItems) => 
+    orders.forEach((cartItems) => 
     {
         if(cartItems.productId == orderId)
         {

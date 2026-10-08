@@ -64,4 +64,5 @@ function renderTracking()
                     `
 
     document.querySelector('.js-tracking-main').innerHTML = trackingHTML;
+
 }

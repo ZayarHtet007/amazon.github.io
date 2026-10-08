@@ -4,9 +4,12 @@ import datejs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { getDeliveryItems } from "../data/deliveryOption.js";
 import { fixedPrice } from "../fixed/fixedPrice.js";
 
+
 renderOrder();
 
+
 document.querySelector('.js-quantity').innerHTML = calculateOrderQuantity();
+
 
 export function renderOrder()
 {
@@ -83,14 +86,4 @@ export function renderOrder()
     })
 
     document.querySelector('.js-orders-grid').innerHTML = html;
-
-    document.querySelectorAll('.js-track-button').forEach((trackButton) => 
-    {
-      trackButton.addEventListener('click', () =>
-      {
-        const orderId = trackButton.dataset.orderId;
-        renderOrder();
-        console.log(orderId);
-      })
-    })
 }

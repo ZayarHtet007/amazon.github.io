@@ -55,7 +55,7 @@ export function renderPaymentSummary()
             <div class="payment-summary-money">$${fixedPrice(orderTotal)}</div>
           </div>
 
-          <button class="place-order-button button-primary js-place-order">
+          <button class="place-order-button button-primary js-place-order" data-order-Id = ${cartItems.productId}>
             Place your order
           </button>
             `
