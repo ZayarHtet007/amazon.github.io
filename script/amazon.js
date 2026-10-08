@@ -1,13 +1,41 @@
-import {products} from "../data/products.js";
-import {fixedPrice} from "../fixed/fixedPrice.js";
-import { addToCart,calculateCartQuantity } from "../data/cart.js";
+import { products } from "../data/products.js";
+import { fixedPrice } from "../fixed/fixedPrice.js";
+import { addToCart, calculateCartQuantity } from "../data/cart.js";
 
 let generatehtml = '';
 
-products.forEach((product) => 
-{
-    generatehtml += 
-                    `
+renderMainPage();
+
+function renderMainPage() {
+
+  const url = new URL(window.location.href);
+  const search = url.searchParams.get('search');
+
+  let filterProduct = products;
+
+  if(search)
+  {
+    let matchingKeyword;
+
+    filterProduct = products.filter((products) => 
+    {
+      let matchingKeyword = false;
+
+      products.keywords.forEach((keywords) =>
+      {
+        if(keywords.toLowerCase().includes(search.toLowerCase()))
+        {
+          matchingKeyword = true;
+        }
+      })
+
+      return matchingKeyword || products.name.toLowerCase().includes(search.toLowerCase());
+    })
+  }
+
+  filterProduct.forEach((product) => {
+    generatehtml +=
+      `
                     <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
@@ -57,42 +85,52 @@ products.forEach((product) =>
           </button>
         </div>
                     `
-});
+  });
 
-document.querySelector('.product-grid-js').innerHTML = generatehtml;
+  document.querySelector('.product-grid-js').innerHTML = generatehtml;
 
-document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
+  document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
 
-const addMessageId = {};
+  const addMessageId = {};
 
-document.querySelectorAll('.add-to-cart-button').forEach((button) => 
-{
-  button.addEventListener('click', () =>
-  {
-    const buttonId = button.dataset.buttonId;
+  document.querySelectorAll('.add-to-cart-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const buttonId = button.dataset.buttonId;
 
-    addToCart(buttonId);
+      addToCart(buttonId);
 
-    document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
+      document.querySelector('.js-cart-quantity').innerHTML = calculateCartQuantity();
 
-    const addMessage = document.querySelector(`.js-added-to-cart-${buttonId}`);
+      const addMessage = document.querySelector(`.js-added-to-cart-${buttonId}`);
 
-    addMessage.classList.add('visiual-message');
+      addMessage.classList.add('visiual-message');
 
-    setTimeout(()=>
-    {
-      const previousId = addMessageId[buttonId];
+      setTimeout(() => {
+        const previousId = addMessageId[buttonId];
 
-      if(previousId)
-      {
-        clearTimeout(previousId);
-      }
-      
-      const intervalId = setTimeout(()=>
-      {
-        addMessage.classList.remove('visiual-message')
-      },2000);
-      addMessageId[buttonId] = intervalId;
-    });
+        if (previousId) {
+          clearTimeout(previousId);
+        }
+
+        const intervalId = setTimeout(() => {
+          addMessage.classList.remove('visiual-message')
+        }, 2000);
+        addMessageId[buttonId] = intervalId;
+      });
+    })
   })
-})
+
+  document.querySelector('.js-search-button').addEventListener('click', () => 
+  {
+    const search = document.querySelector('.js-search-bar').value;
+    window.location.href = `amazon.html?search=${search}`
+  })
+  
+  document.body.addEventListener('keydown', (event) => 
+  {
+    if(event.key === 'Enter')
+    {
+      document.querySelector('.js-search-button').click();
+    }
+  })
+}
